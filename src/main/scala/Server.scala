@@ -9,19 +9,19 @@ import scala.concurrent.ExecutionContext
 
 object Server extends App {
 
-  val host = "0.0.0.0"
-  val port = 9000
+    val host = "0.0.0.0"
+    val port = 9000
 
-  implicit val system: ActorSystem = ActorSystem("helloworld")
-  implicit val executor: ExecutionContext = system.dispatcher
-  implicit val materializer: ActorMaterializer = ActorMaterializer()
+    implicit val system: ActorSystem = ActorSystem("helloworld")
+    implicit val executor: ExecutionContext = system.dispatcher
+    implicit val materializer: ActorMaterializer = ActorMaterializer()
 
-  val route = path("hello") {
-    get {
-      complete("Hello, World!")
+    val route = path("hello") {
+        get {
+            complete("Hello, World!")
+        }
     }
-  }
-  Http().bindAndHandle(route, host, port)
+    Http().bindAndHandle(route, host, port)
 
 }
 
