@@ -2,11 +2,12 @@ import fake.FakeDatabase
 
 object Tips {
 
-
     def donate (pseudo: String, amount: Double) : Unit = FakeDatabase.saveItem(pseudo, amount)
 
-    def donators () : Iterable[String] = _
+    def donators () : List[String] = FakeDatabase.fetchAllItems().map(_.name)
 
-    def amountsSum () : Int = _
+    def amountsSum () : Double = FakeDatabase.fetchAllItems().map(_.amount).sum
+
+    def amountsSumByUser (user: String) : Double = FakeDatabase.fetchItemsByUser(user).map(_.amount).sum
 
 }
