@@ -1,8 +1,8 @@
 package stream
 
 import akka.http.scaladsl.server.Directives
-import stream.controllers.{Tips, User, Follower}
-import stream.json.{Donators, JsonSupport, TipsSum, TipsSumUser, TipsSumUserList, Followers}
+import stream.controllers.{Tips, User, Follower, GiveAway}
+import stream.json.{Donators, JsonSupport, TipsSum, TipsSumUser,TipsSumUserList, Followers}
 
 /**
   * Object which handle all route of the API
@@ -39,9 +39,10 @@ object ApiRoute extends Directives with JsonSupport {
             post {
                 entity(as[TipsSumUser]) {
                     userTips => {
-                        val donated = Tips.donate(userTips.user, userTips.amount)
-                        if (donated) complete("Tips Donated !")
-                        else complete("You can't donate, you're blacklisted.")
+                        Tips.donate(userTips.user, userTips.amount) match {
+                            case true => complete("Tips Donated !")
+                            case false =>    complete("You can't donate, you're blacklisted.")
+                        }
                     }
                 }
             }
@@ -58,6 +59,34 @@ object ApiRoute extends Directives with JsonSupport {
                 get {
                     User.blacklist(user)
                     complete(s"$user is now blacklisted.")
+                }
+            }
+        }~
+        pathPrefix("createGiveAway" / Segment ) {
+            giveaway => {
+                get {
+                    GiveAway.createGiveAway(giveaway) match {
+                        case true => complete("GiveAway created !")
+                        case false => complete("GiveAway can't be create")
+                    }
+
+                }
+            }
+        }~
+        pathPrefix("participate" / Segment / Segment) {
+            (giveawayName, username) => {
+                get {
+                    GiveAway.particpate(giveawayName, username) match {
+                        case true => complete("You participate to the giveaway !")
+                        case false => complete("You can't participate to the giveaway !")
+                    }
+                }
+            }
+        }~
+        pathPrefix("loot" / Segment ) {
+            giveaway => {
+                get {
+                    complete(GiveAway.loot(giveaway))
                 }
             }
         }

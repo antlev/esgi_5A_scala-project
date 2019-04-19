@@ -14,7 +14,14 @@ object GiveAway {
       * Create a Giveaway
       * @param name the giveaway name
       */
-    def createGiveAway (name: String) : Unit = FakeDatabase.createGiveAway(name)
+    def createGiveAway (name: String) : Boolean = {
+        FakeDatabase.findGivewayByName(name) match {
+            case None =>
+                FakeDatabase.createGiveAway(name)
+                true
+            case _ => false
+        }
+    }
 
     /**
       * Subscribe a user to a giveaway only of he is not blacklisted
@@ -36,9 +43,10 @@ object GiveAway {
       */
     def loot (giveawayName: String) : String = {
         FakeDatabase.findGivewayByName(giveawayName) match {
-            case Some(ga) =>
+            case Some(ga) if ga.users.nonEmpty =>
                 val amountByUser = ga.users.map(u => (u, Tips.amountsSumByUser(u)))
-                val totalAmount = amountByUser.reduce((u1, u2) => u1._2 + u2._2)
+                // amountByUser.reduce((u1, u2) => u1._2 + u2._2)  | Don't work WTF
+                val totalAmount = amountByUser.map(_._2).sum
                 var winByUser: List[(String , Int, Int)] = List()
                 val randWin = new Random().nextInt(totalAmount.toInt)
                 var winAcc = 0.0

@@ -10,13 +10,13 @@ object FakeDatabase {
     private var USERIDCOUNT = 3
     private var GIVEAWAYIDCOUNT = 0
     private var ORDERS : List[Item] = List(Item(1, "Flo", 100.0), Item(2, "PtitDoudoux", 50.0), Item(3, "Antoine", 20.0))
-    private var BLACKLISTED: Set[String] = Set()
-    private var FOLLOWERS: Set[String] = Set()
+    private var BLACKLISTED: Set[String] = Set("Antoine")
+    private var FOLLOWERS: Set[String] = Set("PtitDoudoux")
     private var GIVEAWAY: List[GiveAway] = List()
 
     /**
       * Get all the `Item`
-      * @return A list of `Item`
+      * @return A list of `    Item`
       */
     def allItems : List[Item] = ORDERS
 

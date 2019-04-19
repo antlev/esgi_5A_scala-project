@@ -21,4 +21,10 @@ object Follower {
       */
     def isFollowing (follower: String) : Boolean = FakeDatabase.followers.contains(follower)
 
+    /**
+      * Let a user follow the stream
+      * @param follower the username of the follower
+      */
+    def follow (follower: String) : Unit = FakeDatabase.follow(follower)
+
 }
