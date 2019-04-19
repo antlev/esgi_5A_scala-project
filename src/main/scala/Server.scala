@@ -1,25 +1,18 @@
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
-import akka.http.scaladsl.server.Directives._
 import akka.stream.ActorMaterializer
-
 import scala.concurrent.ExecutionContext
+import stream.ApiRoute
 
 object Server extends App {
 
-  val host = "0.0.0.0"
-  val port = 9000
+    val host = "0.0.0.0"
+    val port = 9000
 
-  implicit val system: ActorSystem = ActorSystem("helloworld")
-  implicit val executor: ExecutionContext = system.dispatcher
-  implicit val materializer: ActorMaterializer = ActorMaterializer()
+    implicit val system: ActorSystem = ActorSystem("esgi-5a-scala-project")
+    implicit val executor: ExecutionContext = system.dispatcher
+    implicit val materializer: ActorMaterializer = ActorMaterializer()
 
-  val route = path("hello") {
-    get {
-      complete("Hello, World!")
-    }
-  }
-  Http().bindAndHandle(route, host, port)
-
+    Http().bindAndHandle(ApiRoute.route, host, port)
 }
 
