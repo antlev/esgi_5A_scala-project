@@ -4,6 +4,9 @@ import akka.stream.ActorMaterializer
 import scala.concurrent.ExecutionContext
 import stream.ApiRoute
 
+/**
+  * Main Server object
+  */
 object Server extends App {
 
     val host = "0.0.0.0"

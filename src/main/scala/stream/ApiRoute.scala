@@ -4,6 +4,9 @@ import akka.http.scaladsl.server.Directives
 import stream.controllers.{Tips, User, Follower}
 import stream.json.{Donators, JsonSupport, TipsSum, TipsSumUser, TipsSumUserList, Followers}
 
+/**
+  * Object which handle all route of the API
+  */
 object ApiRoute extends Directives with JsonSupport {
 
     val route = {

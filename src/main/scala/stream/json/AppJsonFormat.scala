@@ -12,7 +12,9 @@ case class TipsSumUser(user: String, amount: Double)
 case class TipsSumUserList(sumUsers: List[TipsSumUser])
 case class Followers (followers: Set[String])
 
-
+/**
+  * Trait for serializing and deserializing the our class
+  */
 trait JsonSupport extends SprayJsonSupport with DefaultJsonProtocol {
     implicit val itemFormat = jsonFormat3(Item)
     implicit val donatorsFormat = jsonFormat1(Donators)
