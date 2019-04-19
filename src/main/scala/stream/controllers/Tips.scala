@@ -2,11 +2,15 @@ package stream.controllers
 
 import fake.FakeDatabase
 import stream.json.TipsSumUser
+import stream.controllers.User
 
 object Tips {
 
-    def donate (user: String, amount: Double) : Unit =
-        if (!FakeDatabase.getBlacklisted.contains(user)) FakeDatabase.saveItem(user, amount)
+    def donate (user: String, amount: Double) : Boolean =
+        if (!User.isBlacklisted(user)) {
+            FakeDatabase.saveItem(user, amount)
+            true
+        } else false
 
     def donators () : List[String] = FakeDatabase.allItems.map(_.name)
 

@@ -10,6 +10,7 @@ case class Donators(donators: List[String])
 case class TipsSum(amount: Double)
 case class TipsSumUser(user: String, amount: Double)
 case class TipsSumUserList(sumUsers: List[TipsSumUser])
+case class Followers (followers: Set[String])
 
 
 trait JsonSupport extends SprayJsonSupport with DefaultJsonProtocol {
@@ -18,4 +19,5 @@ trait JsonSupport extends SprayJsonSupport with DefaultJsonProtocol {
     implicit val tipsSumFormat = jsonFormat1(TipsSum)
     implicit val tipsSumUserFormat = jsonFormat2(TipsSumUser)
     implicit val tipsSumUserListFormat = jsonFormat1(TipsSumUserList)
+    implicit val followersFormat = jsonFormat1(Followers)
 }

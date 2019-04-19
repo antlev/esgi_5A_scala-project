@@ -4,6 +4,8 @@ import fake.FakeDatabase
 
 object Follower {
 
-    def all : Set[String] = FakeDatabase.getFollowers
+    def all : Set[String] = FakeDatabase.followers
+
+    def isFollowing (follower: String) : Boolean = FakeDatabase.followers.contains(follower)
 
 }
